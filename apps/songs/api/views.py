@@ -1,10 +1,12 @@
 from datetime import datetime
 
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ReadOnlyModelViewSet
+from rest_framework.permissions import IsAuthenticated
 
-from .serializers import SongSerializer
+from django.db.models import QuerySet
+
 from ..models import Song
+from .serializers import SongSerializer
 
 
 class SongViewSetRO(ReadOnlyModelViewSet):
@@ -12,7 +14,7 @@ class SongViewSetRO(ReadOnlyModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = SongSerializer
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet:
         qs = self.queryset
         updated_from = self.request.query_params.get('update_from')
         if updated_from is not None:

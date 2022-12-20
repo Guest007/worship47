@@ -86,15 +86,15 @@ class Song(models.Model):
     difficult = models.CharField(max_length=6, choices=DIFFICULT,
                                  default='easy', blank=True)
 
-    chordsFile1 = models.FileField(upload_to=chords_path, blank=True)
-    chordKey1 = models.CharField(
+    chordsFile1 = models.FileField(upload_to=chords_path, blank=True)  # NoQA
+    chordKey1 = models.CharField(  # NoQA
         max_length=2,
         choices=CHORDS,
         default='E',
         blank=True,
     )
-    chordsFile2 = models.FileField(upload_to=chords_path, blank=True)
-    chordKey2 = models.CharField(
+    chordsFile2 = models.FileField(upload_to=chords_path, blank=True)  # NoQA
+    chordKey2 = models.CharField(  # NoQA
         max_length=2,
         choices=CHORDS,
         default='E',

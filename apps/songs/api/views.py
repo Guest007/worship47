@@ -6,6 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.db.models import QuerySet
 
 from ..models import Song
+from .pagination import OnlyNumbersPagination
 from .serializers import SongSerializer
 
 
@@ -13,6 +14,7 @@ class SongViewSetRO(ReadOnlyModelViewSet):
     queryset = Song.objects.all()
     permission_classes = [IsAuthenticated]
     serializer_class = SongSerializer
+    pagination_class = OnlyNumbersPagination
 
     def get_queryset(self) -> QuerySet:
         qs = self.queryset

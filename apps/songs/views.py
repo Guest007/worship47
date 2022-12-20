@@ -98,9 +98,13 @@ class SongUpdate(PermissionRequiredMixin, UpdateView):
         obj_url = reverse('song-detail', kwargs={'pk': self.object.id})
         return obj_url
 
+    def form_valid(self, form: Any) -> HttpResponse:
+        form.instance.user = self.request.user
+        return super().form_valid(form)
+
     def post(self, request: HttpRequest, *args: list, **kwargs: dict) -> HttpResponse:
         self.object = self.get_object()
-        form = self.form_class(request.POST)
+        form = self.get_form()
         if form.is_valid():
             obj = form.save(commit=False)
             obj.title = AntiYoService().cleanup_yo(obj.title)
@@ -128,7 +132,7 @@ class SongCreate(PermissionRequiredMixin, CreateView):
 
     def post(self, request: HttpRequest, *args: list, **kwargs: dict) -> HttpResponse:
         self.object = None
-        form = self.form_class(request.POST)
+        form = self.get_form()
         if form.is_valid():
             obj = form.save(commit=False)
             obj.title = AntiYoService().cleanup_yo(obj.title)

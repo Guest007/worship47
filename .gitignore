@@ -113,8 +113,9 @@ venv.bak/
 .idea/
 
 media/
+static/
+
 !/env/dot.env.template
 
 .directory
 *.db
-# /static/

@@ -25,4 +25,4 @@ EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 try:
     from local import * # NoQA
 except:
-    sys.stdout.write('No local settings')
+    sys.stdout.write('No local settings\n')

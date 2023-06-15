@@ -112,8 +112,8 @@ venv.bak/
 # User-specific stuff
 .idea/
 
-media/
-static/
+/media/
+/static/
 
 !/env/dot.env.template
 

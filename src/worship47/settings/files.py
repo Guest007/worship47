@@ -5,7 +5,7 @@ from worship47.settings import BASE_DIR
 STATIC_ROOT = BASE_DIR.parent / 'static/'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR.parent / 'staticfiles/',
+    BASE_DIR / 'static/',
 ]
 STATICFILES_FINDERS = [
     'django.contrib.staticfiles.finders.FileSystemFinder',

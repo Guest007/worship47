@@ -55,7 +55,7 @@ coverage.xml
 
 # Django stuff:
 *.log
-local*.py
+local.py
 db.sqlite3
 
 # Flask stuff:
@@ -112,8 +112,8 @@ venv.bak/
 # User-specific stuff
 .idea/
 
-media/
-static/
+/media/
+/static/
 
 !/env/dot.env.template
 

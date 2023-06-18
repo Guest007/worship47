@@ -6,6 +6,32 @@ authors = ["Guest007 <trash4@yandex.ru>", "Warzone01 <warzone01@gmail.com>"]
 license = "MIT"
 readme = "README.md"
 
+[tool.black]
+line-length = 128
+target-version = ['py311']
+force-exclude = '''
+(
+    migrations
+    | \tests
+    | test*.py
+)
+'''
+
+[tool.isort]
+line_length = 127
+sections = ["FUTURE", "STDLIB", "DJANGO", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+multi_line_output = 3
+known_django = "django"
+profile = "django"
+src_paths = "app"
+lines_after_imports = 2
+skip_glob = ['**/migrations/**',
+            '**/manage.py',
+            '**/__init__.py',
+            '**/settings/**',
+            '**venv/**',
+            'media/**',
+            'data/**']
 
 
 [tool.poetry.dependencies]
@@ -23,6 +49,13 @@ pytils = "^0.4.1"
 isort = "^5.12.0"
 flake8 = "^6.0.0"
 django-debug-toolbar = "^4.1.0"
+black = "^23.3.0"
+pre-commit = "^3.3.3"
+flake8-print = "^5.0.0"
+django-stubs = "^4.2.1"
+flake8-debugger = "^4.1.2"
+flake8-builtins = "^2.1.0"
+flake8-bugbear = "^23.6.5"
 
 [build-system]
 requires = ["poetry-core"]

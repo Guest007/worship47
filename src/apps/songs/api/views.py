@@ -1,9 +1,9 @@
 from datetime import datetime
 
-from rest_framework.viewsets import ReadOnlyModelViewSet
-from rest_framework.permissions import IsAuthenticated
-
 from django.db.models import QuerySet
+
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from ..models import Song
 from .pagination import OnlyNumbersPagination
@@ -18,7 +18,7 @@ class SongViewSetRO(ReadOnlyModelViewSet):
 
     def get_queryset(self) -> QuerySet:
         qs = self.queryset
-        updated_from = self.request.query_params.get('update_from')
+        updated_from = self.request.query_params.get("update_from")
         try:
             updated = datetime.strptime(updated_from, "%d%m%Y").date()
             qs = qs.filter(modified__gte=updated)

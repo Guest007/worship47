@@ -3,18 +3,18 @@ repos:
     hooks:
       - id: black
         name: black
-        entry: black app
+        entry: black src
         language: python
         types: [python]
 
       - id: isort
         name: isort
-        entry: isort app
+        entry: isort src
         language: python
         types: [python]
 
       - id: flake8
         name: flake8
-        entry: flake8 server
+        entry: flake8 src
         language: python
         types: [python]

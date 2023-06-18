@@ -1,11 +1,11 @@
+from django.core.management.base import BaseCommand
+
 from songs.models import Song
 from songs.services import AntiYoService
 
-from django.core.management.base import BaseCommand
-
 
 class Command(BaseCommand):
-    help = 'Cleanup YO chars in texts and titles'
+    help = "Cleanup YO chars in texts and titles"
 
     def handle(self, *args, **options):  # NoQA
         all_songs = Song.objects.all()
@@ -17,16 +17,16 @@ class Command(BaseCommand):
             if new_title := AntiYoService().cleanup_yo(title):
                 if new_title != title:
                     song.title = new_title
-                    fields_to_save.append('title')
+                    fields_to_save.append("title")
 
             if new_text := AntiYoService().cleanup_yo(text):
                 if new_text != text:
                     song.text = new_text
-                    fields_to_save.append('text')
+                    fields_to_save.append("text")
 
             if fields_to_save:
                 song.save(update_fields=fields_to_save)
                 print(song.id, fields_to_save)  # NoQA
                 counter += 1
 
-        print(f'Fixed {counter} songs')  # NoQA
+        print(f"Fixed {counter} songs")  # NoQA

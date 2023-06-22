@@ -15,7 +15,7 @@ from .services import AntiYoService
 
 
 class Index(TemplateView):
-    template_name = "worship/../../templates/worship/index.html"
+    template_name = "worship/index.html"
 
     def get_context_data(self, **kwargs: dict) -> dict:
         categs = Category.objects.all()[:4]

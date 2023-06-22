@@ -24,7 +24,10 @@ from .vars import *  # NoQA
 
 EMAIL_BACKEND = "django.core.mail.backends.dummy.EmailBackend"
 
-try:
-    from local import *  # NoQA
-except:
-    sys.stdout.write("No local settings\n")
+if DEBUG:
+    try:
+        from .local import *  # NoQA
+    except ModuleNotFoundError:
+        sys.stdout.write("No local settings\n")
+    except Exception as e:
+        sys.stdout.write(f"Failed with exception {repr(e)}")

@@ -2,7 +2,6 @@
 # ------------------------------------------------------------------------------
 from worship47.settings import BASE_DIR
 
-
 STATIC_ROOT = BASE_DIR.parent / "static/"
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [

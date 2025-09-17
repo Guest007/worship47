@@ -2,7 +2,6 @@ import os
 import sys
 from pathlib import Path
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 APPS_DIR = BASE_DIR / "apps"
@@ -24,10 +23,10 @@ from .vars import *  # NoQA
 
 EMAIL_BACKEND = "django.core.mail.backends.dummy.EmailBackend"
 
-if DEBUG:
+if DEBUG:  # noqa: F405 (imported from .vars)
     try:
         from .local import *  # NoQA
     except ModuleNotFoundError:
         sys.stdout.write("No local settings\n")
-    except Exception as e:
+    except Exception as e:  # noqa: BLE001
         sys.stdout.write(f"Failed with exception {repr(e)}")

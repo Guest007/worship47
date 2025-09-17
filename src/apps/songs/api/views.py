@@ -1,7 +1,6 @@
 from datetime import datetime
 
 from django.db.models import QuerySet
-
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
@@ -19,9 +18,7 @@ class SongViewSetRO(ReadOnlyModelViewSet):
     def get_queryset(self) -> QuerySet:
         qs = self.queryset
         updated_from = self.request.query_params.get("update_from")
-        try:
+        if updated_from:
             updated = datetime.strptime(updated_from, "%d%m%Y").date()
             qs = qs.filter(modified__gte=updated)
-        except Exception:
-            pass  # NoQA
         return qs

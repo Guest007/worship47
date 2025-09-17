@@ -1,9 +1,8 @@
 from typing import Any
 
-from django.db import models
-
 from accounts.models import User
 from ckeditor.fields import RichTextField
+from django.db import models
 from pytils import translit
 from tagulous.models import TagField
 from versatileimagefield.fields import VersatileImageField

@@ -1,0 +1,50 @@
+name: Run Tests on PR
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: testdb
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpass
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+
+    env:
+      POSTGRES_DB: testdb
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpass
+      DJANGO_SECRET_KEY: test-secret-key
+      DEBUG: 0
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install uv
+      run: |
+        curl -Ls https://astral.sh/uv/install.sh | bash
+        echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+    - name: Install dependencies
+      run: |
+        uv venv
+        uv sync --active --frozen --no-install-project
+
+    - name: Run migrations
+      run: python manage.py migrate
+
+    - name: Run tests
+      run: python manage.py test

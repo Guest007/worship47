@@ -1,6 +1,5 @@
 from worship47.settings import DEBUG
 
-
 if not DEBUG:
     import os
 

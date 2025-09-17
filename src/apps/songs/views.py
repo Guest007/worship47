@@ -21,7 +21,7 @@ class Index(TemplateView):
         categs = Category.objects.all()[:4]
         self.extra_context = {"categs": categs}
 
-        kwargs = super(Index, self).get_context_data(**kwargs)
+        kwargs = super().get_context_data(**kwargs)
         return kwargs
 
 
@@ -38,18 +38,18 @@ class SongList(ListView):
     def get(self, request: HttpRequest, *args: list, **kwargs: dict) -> HttpResponse:
         self.categ = self.request.GET.get("categ")
         self.search = self.request.GET.get("search")
-        return super(SongList, self).get(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs: dict) -> dict:
         self.extra_context = {
             "categ": self.categ,
             "search": self.search,
         }
-        kwargs = super(SongList, self).get_context_data(**kwargs)
+        kwargs = super().get_context_data(**kwargs)
         return kwargs
 
     def get_queryset(self) -> QuerySet:
-        qs = super(SongList, self).get_queryset()
+        qs = super().get_queryset()
         qs = qs.prefetch_related("category")
 
         # Filter by categorie's slug

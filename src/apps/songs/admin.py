@@ -6,7 +6,6 @@ from django.contrib.admin.widgets import AdminFileWidget
 from django.db.models import QuerySet
 from django.http import HttpRequest
 from django.utils.safestring import mark_safe
-
 from tagulous import admin as tagadmin
 
 from .models import Category, Song
@@ -46,7 +45,7 @@ class ImageWidgetAdmin(admin.ModelAdmin):
             _ = kwargs.pop("request", None)
             kwargs["widget"] = AdminImageWidget
             return db_field.formfield(**kwargs)
-        return super(ImageWidgetAdmin, self).formfield_for_dbfield(db_field, **kwargs)
+        return super().formfield_for_dbfield(db_field, **kwargs)
 
 
 @register(Category)
@@ -57,9 +56,9 @@ class CategAdmin(ImageWidgetAdmin):
     image_fields = ["image"]
 
     def admin_image(self, obj: Category) -> str:
-        try:
+        if obj.image:
             url = f"{obj.image.url}"
-        except Exception:
+        else:
             url = f"{obj.image}"
         return mark_safe(f'<img src="{self.base_url}{url}" style="width: 50px;"/>')
 
@@ -78,7 +77,7 @@ class SongAdmin(admin.ModelAdmin):
         return " || ".join(categs)
 
     def get_queryset(self, request: HttpRequest) -> QuerySet:
-        qs = super(SongAdmin, self).get_queryset(request)
+        qs = super().get_queryset(request)
         qs = qs.prefetch_related(
             "category",
         ).select_related(

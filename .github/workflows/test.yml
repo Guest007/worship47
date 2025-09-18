@@ -44,7 +44,7 @@ jobs:
         uv sync --active --frozen --no-install-project
 
     - name: Run migrations
-      run: python manage.py migrate
+      run: uv run manage.py migrate
 
     - name: Run tests
-      run: python manage.py test
+      run: uv run manage.py test

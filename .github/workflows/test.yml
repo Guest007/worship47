@@ -2,7 +2,6 @@ name: Run Tests on PR
 
 on:
   pull_request:
-    branches: [main]
 
 jobs:
   test:
@@ -29,6 +28,7 @@ jobs:
       POSTGRES_PASSWORD: testpass
       DJANGO_SECRET_KEY: test-secret-key
       DEBUG: 0
+      SECRET_KEY: test-secret-key
 
     steps:
     - uses: actions/checkout@v3
@@ -44,7 +44,7 @@ jobs:
         uv sync --active --frozen --no-install-project
 
     - name: Run migrations
-      run: uv run manage.py migrate
+      run: cd src && uv run manage.py migrate
 
     - name: Run tests
-      run: uv run manage.py test
+      run: cd src && uv run pytest

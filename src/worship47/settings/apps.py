@@ -1,5 +1,5 @@
 # Application definition
-from settings import DEBUG
+from .vars import DEBUG
 
 PRE_APPS = []
 

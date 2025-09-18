@@ -28,7 +28,7 @@ jobs:
       POSTGRES_PASSWORD: testpass
       DJANGO_SECRET_KEY: test-secret-key
       DEBUG: 0
-      SECFRET_KEY: test-secret-key
+      SECRET_KEY: test-secret-key
 
     steps:
     - uses: actions/checkout@v3

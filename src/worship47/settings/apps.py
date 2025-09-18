@@ -1,4 +1,5 @@
 # Application definition
+from settings import DEBUG
 
 PRE_APPS = []
 
@@ -26,5 +27,8 @@ LOCAL_APPS = [
     "accounts.apps.AccountsConfig",
     "songs",  # .apps.SongsConfig',
 ]
+
+if DEBUG:
+    THIRD_PARTY_APPS += ["debug_toolbar"]
 
 INSTALLED_APPS = PRE_APPS + DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

@@ -26,6 +26,6 @@ jobs:
           git checkout ${{ github.ref_name }}
           docker compose down
           docker compose up -d --build
-          docker compose exec web python manage.py migrate --noinput
-          docker compose exec web python manage.py collectstatic --noinput
+          docker compose exec web uv run manage.py migrate --noinput
+          docker compose exec web uv run manage.py collectstatic --noinput
         EOF

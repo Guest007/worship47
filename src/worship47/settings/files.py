@@ -1,8 +1,12 @@
 # STATIC
 # ------------------------------------------------------------------------------
+import os
+
 from worship47.settings import BASE_DIR
 
-STATIC_ROOT = BASE_DIR.parent / "static/"
+FILES_BASE = os.getenv("FILES_BASE", "..")
+
+STATIC_ROOT = f"{FILES_BASE}/staticfiles/"
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static/",
@@ -14,5 +18,5 @@ STATICFILES_FINDERS = [
 
 # MEDIA
 # ------------------------------------------------------------------------------
-MEDIA_ROOT = BASE_DIR.parent / "media/"
+MEDIA_ROOT = f"{FILES_BASE}/media/"
 MEDIA_URL = "/media/"

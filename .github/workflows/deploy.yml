@@ -27,5 +27,5 @@ jobs:
           docker compose down
           docker compose up -d --build
           docker compose exec web uv run manage.py migrate --noinput
-          docker compose exec web uv run manage.py collectstatic --noinput
+          echo "Deployed successfully"
         EOF

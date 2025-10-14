@@ -36,4 +36,7 @@ RUN uv venv && \
 #COPY . .
 COPY src/ /app/
 
+# Collect static files
+RUN uv run manage.py collectstatic --noinput
+
 CMD ["uv", "run", "gunicorn", "--chdir", "/app", "worship47.wsgi:application", "--bind", "0.0.0.0:8000"]

@@ -25,8 +25,8 @@ services:
     env_file:
       - .env.production
     volumes:
-      - ./staticfiles:/app/staticfiles
-      - ./media:/app/media
+      - static_volume:/app/staticfiles
+      - media_volume:/app/media
     depends_on:
       - db
       - redis
@@ -45,3 +45,5 @@ services:
 
 volumes:
   pgdata:
+  static_volume:
+  media_volume:

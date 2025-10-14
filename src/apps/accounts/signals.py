@@ -9,7 +9,7 @@ from .models import Profile, User
 
 @receiver(post_save, sender=User, dispatch_uid="create_update_profile")
 def create_or_update_user_profile(sender: Any, instance: Any, created: bool, **kwargs: Any) -> None:
+    profile, _ = Profile.objects.get_or_create(user=instance)
     if created:
-        Profile.objects.create(user=instance)
         Token.objects.create(user=instance)
-    instance.profile.save()
+    profile.save()

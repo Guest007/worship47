@@ -41,3 +41,8 @@ class CustomUserAdmin(UserAdmin):
     )
     ordering = ("email",)
     inlines = [ProfileInline]
+
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    pass

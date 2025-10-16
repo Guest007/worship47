@@ -10,8 +10,14 @@ services:
       - /etc/letsencrypt/live/worship47.top/privkey.pem:/etc/ssl/private/privkey.pem:ro
       - ./staticfiles:/var/www/w47/staticfiles:ro
       - ./media:/var/www/w47/media:rw
+      - /etc/nginx/auth:/etc/nginx/auth:ro
     depends_on:
       - web
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"
 
   web:
     build:
@@ -25,9 +31,15 @@ services:
     volumes:
       - ./staticfiles:/var/www/w47/staticfiles
       - ./media:/var/www/w47/media
+      - ./logs:/var/www/w47/logs
     depends_on:
       - db
       - redis
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
 
   db:
     image: postgres:17
@@ -36,10 +48,66 @@ services:
       - .env.production
     volumes:
       - pgdata:/var/lib/postgresql/data
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"
 
   redis:
     image: redis:7
     restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "50m"
+        max-file: "5"
+
+  loki:
+    image: grafana/loki:2.9.0
+    container_name: loki
+    command: -config.file=/etc/loki/local-config.yaml
+    expose:
+      - "3100"
+    volumes:
+      - ./loki-config.yaml:/etc/loki/local-config.yaml
+    restart: always
+
+  promtail:
+    image: grafana/promtail:2.9.0
+    container_name: promtail
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./promtail-config.yaml:/etc/promtail/config.yml
+    command: -config.file=/etc/promtail/config.yml
+    depends_on:
+      - loki
+    restart: always
+
+  grafana:
+    image: grafana/grafana:10.2.0
+    container_name: grafana
+    expose:
+      - "3000"
+    env_file:
+      - .env.production
+    environment:
+      - GF_PATHS_PROVISIONING=/etc/grafana/provisioning
+      - GF_SERVER_ROOT_URL=https://grafana.worship47.top
+      - GF_SERVER_DOMAIN=grafana.worship47.top
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana-provisioning:/etc/grafana/provisioning
+    depends_on:
+      - loki
+    restart: always
 
 volumes:
   pgdata:
+  grafana_data:
+
+networks:
+  default:
+    name: w47_network
+    driver: bridge

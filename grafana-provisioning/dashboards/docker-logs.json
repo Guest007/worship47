@@ -1,0 +1,27 @@
+{
+  "id": null,
+  "uid": "docker-logs",
+  "title": "Docker Container Logs",
+  "tags": ["logs", "docker"],
+  "timezone": "browser",
+  "schemaVersion": 36,
+  "version": 1,
+  "panels": [
+    {
+      "type": "logs",
+      "title": "Container Logs",
+      "gridPos": { "x": 0, "y": 0, "w": 24, "h": 12 },
+      "options": {
+        "dedupStrategy": "none",
+        "showLabels": true,
+        "showTime": true
+      },
+      "targets": [
+        {
+          "refId": "A",
+          "expr": "{job=\"docker\"}"
+        }
+      ]
+    }
+  ]
+}

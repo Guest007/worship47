@@ -28,7 +28,7 @@ RUN rm -rf /app/.venv
 # Копируем только pyproject.toml и устанавливаем зависимости
 COPY pyproject.toml uv.lock ./
 RUN uv venv && \
-    uv sync --active --frozen --no-install-project
+    uv sync --active --frozen --no-install-project --no-dev
 #    uv pip install --upgrade pip && \
 #    uv pip install --system .
 

@@ -19,6 +19,7 @@ COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 ENV LIBRARY_PATH /lib:/usr/lib
 ENV UV_PYTHON_INSTALL_DIR /opt/uv/python
 ENV PYTHONUNBUFFERED 1
+ENV UV_HTTP_TIMEOUT=90
 
 ADD . /app
 WORKDIR /app
